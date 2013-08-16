@@ -1,7 +1,6 @@
 package com.centralviewgaming.mccustomplugin;
 
 import org.bukkit.Bukkit;
-import org.bukkit.GameMode;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
