@@ -2,6 +2,7 @@ package com.centralviewgaming.mccustomplugin;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.logging.Level;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -14,13 +15,16 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.SignChangeEvent;
 import org.bukkit.event.vehicle.VehicleMoveEvent;
+import org.bukkit.plugin.java.JavaPlugin;
 
 import ru.tehkode.permissions.PermissionUser;
 import ru.tehkode.permissions.bukkit.PermissionsEx;
 
 public class MinecartEjectListener implements Listener{
 	
+	JavaPlugin jPlugin = null;
     public MinecartEjectListener(CVGCustomPlugin plugin) {
+    	jPlugin = plugin;
         plugin.getServer().getPluginManager().registerEvents(this, plugin);
     }
     
@@ -29,9 +33,14 @@ public class MinecartEjectListener implements Listener{
     		if(e.getLine(0).equalsIgnoreCase("(CVG EJECT)")){
     			PermissionUser user = PermissionsEx.getUser(e.getPlayer());
     			String[] groups = user.getGroupsNames();
-    			List <String> groupList = Arrays.asList(groups);
-    			if(groupList.contains("admins")){
-            		e.getBlock().breakNaturally();
+    			boolean allowed = false;
+    			for(String s: groups){
+        			if(s.equalsIgnoreCase("admins")){
+        				allowed = true;
+        			}
+    			}
+    			if(!allowed){
+    				e.getBlock().breakNaturally();
             		e.getPlayer().sendMessage(ChatColor.RED + "RESTRICTED SIGN: CentralView Staff Only Sign");
     			}
     		}
