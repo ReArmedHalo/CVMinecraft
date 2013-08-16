@@ -1,6 +1,7 @@
 package com.centralviewgaming.mccustomplugin;
 
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.block.Sign;
 import org.bukkit.entity.EntityType;
@@ -8,12 +9,23 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.SignChangeEvent;
 import org.bukkit.event.vehicle.VehicleMoveEvent;
 
 public class MinecartEjectListener implements Listener{
-
+	
     public MinecartEjectListener(CVGCustomPlugin plugin) {
         plugin.getServer().getPluginManager().registerEvents(this, plugin);
+    }
+    
+    @EventHandler(priority = EventPriority.HIGHEST)
+    public void onSignCreate(SignChangeEvent e){
+    		if(e.getLine(0).equalsIgnoreCase("(CVG EJECT)")){
+        		if(!e.getPlayer().isOp()){
+        			e.getBlock().breakNaturally();
+        			e.getPlayer().sendMessage(ChatColor.RED + "RESTRICTED SIGN: CentralView Staff Only Sign");
+        		}
+    		}
     }
     
     @EventHandler(priority = EventPriority.HIGHEST)
@@ -28,9 +40,9 @@ public class MinecartEjectListener implements Listener{
     					if(s.getLine(0).toString().equals("(CVG EJECT)")){
     						event.getVehicle().eject();
     						String[] xyz = s.getLine(1).split("\\s+");
-    						Double telX = Double.parseDouble(xyz[0]);
+    						Double telX = Double.parseDouble(xyz[0]) + .5;
     						Double telY = Double.parseDouble(xyz[1]);
-    						Double telZ = Double.parseDouble(xyz[2]);
+    						Double telZ = Double.parseDouble(xyz[2]) + .5;
     						Float telP = Float.parseFloat(s.getLine(2));
     						Location tele = new Location(Bukkit.getWorld(player.getWorld().getName()), telX, telY, telZ, telP, 0);
     						player.teleport(tele);
