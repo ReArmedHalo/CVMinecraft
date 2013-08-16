@@ -1,6 +1,7 @@
 name: CVG Custom Plugin
 main: com.centralviewgaming.mccustomplugin.CVGCustomPlugin
 version: 1.0
+prefix: CVGCP
 commands:
     cvg:
         description: CentralView Gaming Custom Plugin

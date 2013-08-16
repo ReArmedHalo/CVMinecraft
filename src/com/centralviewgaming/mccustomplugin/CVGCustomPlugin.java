@@ -1,6 +1,7 @@
 package com.centralviewgaming.mccustomplugin;
 
 import org.bukkit.Bukkit;
+import org.bukkit.GameMode;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -10,17 +11,17 @@ public final class CVGCustomPlugin extends JavaPlugin{
 
 	double pluginVersion = 1.0;
 	String pluginName = "CVG Custom Minecraft Plugin";
-	String pluginabv = "CCMP";
+	String pluginabv = "CVGCP";
 	
     @Override
     public void onEnable(){
     		new MinecartEjectListener(this);
-    		getLogger().info("[" + pluginabv + "] " + pluginName + " " + pluginVersion + " enabled!");
+    		getLogger().info(pluginName + " " + pluginVersion + " enabled!");
     }
     
     @Override
     public void onDisable() {
-		getLogger().info("[" + pluginabv + "] " + pluginName + " " + pluginVersion + " disabled!");
+		getLogger().info(pluginName + " " + pluginVersion + " disabled!");
     }
     
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args){
