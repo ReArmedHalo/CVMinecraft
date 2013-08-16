@@ -10,7 +10,6 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.vehicle.VehicleMoveEvent;
 
-
 public class MinecartEjectListener implements Listener{
 
     public MinecartEjectListener(CVGCustomPlugin plugin) {
@@ -26,9 +25,14 @@ public class MinecartEjectListener implements Listener{
     				loc.setY(loc.getY() - 2);
     				if(loc.getBlock().getState() instanceof Sign){
     					Sign s = (Sign) loc.getBlock().getState();
-    					if(s.getLine(3).toString().equals("(CVG EJECT)")){
+    					if(s.getLine(0).toString().equals("(CVG EJECT)")){
     						event.getVehicle().eject();
-    						Location tele = new Location(Bukkit.getWorld(player.getWorld().getName()), 81, 100, 493.5, -90, 0);
+    						String[] xyz = s.getLine(1).split("\\s+");
+    						Double telX = Double.parseDouble(xyz[0]);
+    						Double telY = Double.parseDouble(xyz[1]);
+    						Double telZ = Double.parseDouble(xyz[2]);
+    						Float telP = Float.parseFloat(s.getLine(2));
+    						Location tele = new Location(Bukkit.getWorld(player.getWorld().getName()), telX, telY, telZ, telP, 0);
     						player.teleport(tele);
     					}
     				}
